@@ -1,3 +1,36 @@
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const cors = require('cors');
+// require('dotenv').config();
+
+// const app = express();
+
+// // ✅ Middleware
+// app.use(cors());               // Allow cross-origin requests
+// app.use(express.json());       // Parse JSON bodies
+
+
+// const todoRoutes = require('./routes/todoRoutes');
+// app.use('/api/todos', todoRoutes);
+
+// // ✅ Test Route
+// app.get('/api/test', (req, res) => {
+//   res.json({ message: 'Hello from backend 👋' });
+// });
+
+// // ✅ MongoDB + Server Setup
+// const PORT = process.env.PORT || 5000;
+
+// mongoose.connect(process.env.MONGO_URI, {
+//   useNewUrlParser: true,          // ✅ deprecated but doesn't break things
+//   useUnifiedTopology: true,       // ✅ deprecated too, but safe for now
+// })
+// .then(() => {
+//   console.log('MongoDB connected ✅');
+//   app.listen(PORT, () => console.log(`Server running on port ${PORT} 🔥`));
+// })
+// .catch(err => console.log(err));
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,9 +42,14 @@ const app = express();
 app.use(cors());               // Allow cross-origin requests
 app.use(express.json());       // Parse JSON bodies
 
-
+// ✅ Routes
 const todoRoutes = require('./routes/todoRoutes');
 app.use('/api/todos', todoRoutes);
+
+// ✅ Root Route for Render Health Check
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
 
 // ✅ Test Route
 app.get('/api/test', (req, res) => {
@@ -22,8 +60,8 @@ app.get('/api/test', (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,          // ✅ deprecated but doesn't break things
-  useUnifiedTopology: true,       // ✅ deprecated too, but safe for now
+  useNewUrlParser: true,          // Deprecated but safe for now
+  useUnifiedTopology: true,       // Deprecated too, but doesn’t break
 })
 .then(() => {
   console.log('MongoDB connected ✅');
